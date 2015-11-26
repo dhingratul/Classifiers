@@ -1,4 +1,4 @@
-function [output]= Perceptron(tr,te,label,param)
+function [output]= Perceptron(tr,te,label)
 % ---------------------------------------------------------------------- %
 % OCR: Perceptron
 % Author: Atul Dhingra
@@ -7,35 +7,31 @@ function [output]= Perceptron(tr,te,label,param)
 % ---------------------------------------------------------------------- %
 
 %% Variable Declaration
-w=zeros(28,28);
+w=cell(28,28);
 b;
 wb=1;
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%Binary Threshold Neuron%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-if(param=='b')
-z=b+tr.*w;
+for i=1:28
+    for j=1:28
+z=b+tr{i,j}.*w{i,j};
 if(z>=0)
     y=1;
 else
     y=0;
 end
+   
 %% Learning:Binary Threshold Neuron
-for i=1:28
-    for j=1:28
-        if(tr{i,j}=te{})
+        if(tr{i,j}~=te{i,j} && y==0)
+            w{i,j}=w{i,j}+tr{i}{j};
+        else if(tr{i,j}~=te{i,j} && y==1)
+             w{i,j}=w{i,j}-tr{i}{j};   
         end
     end
 end
 
 end
 
-%%
-%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% Sigmoid Neuron %%%%
-%%%%%%%%%%%%%%%%%%%%%%%%
-if(param=='s')
-    
-end
-end
+
