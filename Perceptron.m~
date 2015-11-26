@@ -19,10 +19,6 @@ else
     y=0;
 end
 %% Learning:Binary Threshold Neuron
-for i=1:28
-    for j=1:28
-        if(tr{i,j}=te{})
-    end
-end
+
 
 end
