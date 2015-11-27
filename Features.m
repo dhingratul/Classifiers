@@ -9,12 +9,12 @@ clear all;
 close all;
 clc;
 
-load testimages;
-Data=testimages;
+load validationimages;
+Data=validationimages;
 plus=0;
 asterisk=0;
 ctr=1;
-F_test=[];
+F_validation=[];
 r=size(Data,1);
 c=size(Data,2);
 
@@ -33,10 +33,13 @@ for i=1:28:r
             Data{k,j}=0;
         end
         end
-        F_test(ctr,1)=plus;
-        F_test(ctr,2)=asterisk;
-        ctr=ctr+1
+        
+    end
+        F_validation(ctr,1)=plus;
+        F_validation(ctr,2)=asterisk;
+        F_validation(ctr,3)=plus+asterisk;
+        ctr=ctr+1;
         asterisk=0;
         plus=0;
-    end
 end
+save Feature_Validation F_validation
