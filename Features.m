@@ -4,6 +4,15 @@
 % dhingra[dot]atul92[at]gmail.com
 % Last Editted: 25 Nov 2015
 % ---------------------------------------------------------------------- %
+%% Ideas:
+% 1. Euler Number
+% 2. PCA 
+% 3. The number of white pixels
+% 4. The principal components of the set of coordinates of the white pixels — tells you how "elongated" the shape is
+% 5. Segment into windows and count
+% 6. t-sne on the entire image
+% 7. HOG
+
 %% Variable Declaration
 clear all;
 close all;

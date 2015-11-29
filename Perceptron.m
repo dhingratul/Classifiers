@@ -21,7 +21,7 @@ wb=1;
 for i=1:length(Feature)
     for j=1:(length(w))
 %% Learning
-    z=b+Feature(i,1).*w(j,1);
+    z=b+w(j,:)*Feature(i,:)';
     if j==1
     maximum=z;
     index=j;
@@ -31,10 +31,11 @@ for i=1:length(Feature)
     index=j;
     end    
     y=maximum;
+%   [maxval, ind] = max(z(:))
 %% Weight Updates
     if y~=label(index,1)
-    w(i,1)=w(i,1)-Feature(j,1);
-    w(index,1)=w(index,1)+Feature(j,1);
+    w(j,:)=w(j,:)-Feature(j,:);
+    w(index,:)=w(index,:)+Feature(j,:);
     end
     end
 end
