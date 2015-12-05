@@ -1,45 +1,58 @@
-%function [output]= Perceptron(tr,te,label)
+%function [output]= Perceptron(tr,label_tr,te,label_te)
 % ---------------------------------------------------------------------- %
 % OCR: Perceptron
 % Author: Atul Dhingra
 % dhingra[dot]atul92[at]gmail.com
-% Last Editted: 25 Nov 2015
 % ---------------------------------------------------------------------- %
 clear all;
 close all;
 clc;
 %% Variable Declaration
 load Feature_Train; %Input = Feature Vectors
-load Feature_Test; 
-load Labels;
-label=traininglabels;
-Feature=F_train;
-w=zeros(10,size(F_train,2)); % Each feature has a weight
+load Feature_Test;
+% load Feature_Test; 
+load labels;
+label_tr=traininglabels;
+Feature_train=F_Train;
+w=zeros(10,size(Feature_train,2)); % Each feature has a weight
 b=0;
 wb=1;
-
-for i=1:length(Feature)
-    for j=1:(length(w))
+label_te=testlabels;
+correct=0;
+Feature_test=F_Test;
+% Dot product one feature vector with all the different weight vectors
+ 
+% for k=1:10 % Run it until it converges
+for i=1:length(Feature_train)%100
+    for j=1:(size(w,1))
 %% Learning
-    z=b+w(j,:)*Feature(i,:)';
-    if j==1
-    maximum=z;
-    index=j;
+    z(j,1)=w(j,:)*Feature_train(i,:)';
     end
-    if(z>maximum)
-    maximum=z;
-    index=j;
-    end    
-    y=maximum;
-%   [maxval, ind] = max(z(:))
+    [maximum, index] = max(z(:)); %Calculating argmax
 %% Weight Updates
-    if y~=label(index,1)
-    w(j,:)=w(j,:)-Feature(j,:);
-    w(index,:)=w(index,:)+Feature(j,:);
+    if index~=label_tr(i,1)+1
+    w(label_tr(i,1)+1,:)=w(label_tr(i,1)+1,:)+Feature_train(i,:);
+    w(index,:)=w(index,:)-Feature_train(i,:);
     end
-    end
+    
+    
 end
-%end
+% end
+% w=(w-min(w(:)))/(max(w(:))-min(w(:))); %Normalization of weight vector
+% save Weights w
+%% Classification
+for i=1:length(Feature_test)%100
+    for j=1:(size(w,1))
+
+   z(j,1)=w(j,:)*Feature_test(i,:)';
+    end
+   [maximum, index] = max(z(:)); %Calculating argmax
+    if index==label_te(i,1)+1
+      correct=correct+1;
+    end
+    
+end
+
 
 
 
