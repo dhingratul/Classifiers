@@ -4,36 +4,45 @@
 % Author: Atul Dhingra
 % dhingra[dot]atul92[at]gmail.com
 % ---------------------------------------------------------------------- %
-clear all;
-close all;
-clc;
+% clear all;
+% close all;
+% clc;
 %% Variable Declaration
-load Feature_Train; %Input = Feature Vectors
-load Feature_Test;
-load Feature_Test;
-load Feature_Validation;
-load labels;
-label_tr=traininglabels;
-label_te=testlabels;
-Feature_train=F_Train;
-w=zeros(10,size(Feature_train,2)); % Each feature has a weight
+load FaceData;
+
+% load Feature_Train; %Input = Feature Vectors
+% load Feature_Test;
+% load Feature_Test;
+% load Feature_Validation;
+% load labels;
+% label_tr=traininglabels;
+% label_te=testlabels;
+% tr=F_Train;
+% te=F_Test;
+
+label_tr=face_train_label;
+label_te=face_test_label;
+tr=F_Train_Face;
+te=F_Test_Face;
+
+w=zeros(10,size(tr,2)); % Each feature has a weight
 b=0;
 wb=1;
 correct=0;
-Feature_test=F_Test;
+
 % Dot product one feature vector with all the different weight vectors
  
  % Run it until it converges
-for i=1:size(Feature_train,1)%100
+for i=1:size(tr,1)%100
     for j=1:(size(w,1))
 %% Learning
-    z(j,1)=w(j,:)*Feature_train(i,:)';
+    z(j,1)=w(j,:)*tr(i,:)';
     end
     [maximum, index] = max(z(:)); %Calculating argmax
 %% Weight Updates
     if index~=label_tr(i,1)+1
-    w(label_tr(i,1)+1,:)=w(label_tr(i,1)+1,:)+Feature_train(i,:);
-    w(index,:)=w(index,:)-Feature_train(i,:);
+    w(label_tr(i,1)+1,:)=w(label_tr(i,1)+1,:)+tr(i,:);
+    w(index,:)=w(index,:)-tr(i,:);
     end
   
 % end
@@ -41,10 +50,10 @@ for i=1:size(Feature_train,1)%100
 % save Weights w
 end
 %% Classification
-for i=1:size(Feature_test,1)%100
+for i=1:size(te,1)%100
     for j=1:(size(w,1))
 
-   z(j,1)=w(j,:)*Feature_test(i,:)';
+   z(j,1)=w(j,:)*te(i,:)';
     end
    [maximum, index] = max(z(:)); %Calculating argmax
     if index==label_te(i,1)+1
