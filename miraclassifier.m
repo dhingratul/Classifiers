@@ -4,33 +4,40 @@
 % Author: Atul Dhingra
 % dhingra[dot]atul92[at]gmail.com
 % ---------------------------------------------------------------------- %
-clear all;
-close all;
-clc;
+    clear all;
+    close all;
+    clc;
 %% Variable Declaration
+load FaceData;
+ctr=1;
+
 % load Feature_Train; %Input = Feature Vectors
 % load Feature_Test;
 % load Feature_Test;
 % load Feature_Validation;
 % load labels;
+for iter=45:45:450
+% label_tr=traininglabels(1:iter,:);
+% label_te=testlabels;
+% tr=F_Train(1:iter,:);
+% te=F_Test;
 
-% label_tr=traininglabels;
-% label_te=validationlabels;
-% tr=F_Train;
-% te=F_Validation;
-%% Face
-load FaceData;
-label_tr=face_train_label;
+label_tr=face_train_label(1:iter,:);
 label_te=face_test_label;
-tr=F_Train_Face;
+tr=F_Train_Face(1:iter,:);
 te=F_Test_Face;
 
-w=zeros(10,size(tr,2)); % Each feature has a weight
+w=zeros(2,size(tr,2)); % Each feature has a weight
 b=0;
 wb=1;
 correct=0;
+
+% Dot product one feature vector with all the different weight vectors
+
+ % Run it until it converges
 tau=0;
 C=0.000001;
+    tic;
 % Dot product one feature vector with all the different weight vectors
 for i=1:size(tr,1)%100
     for j=1:(size(w,1))
@@ -47,6 +54,7 @@ for i=1:size(tr,1)%100
     end
     
 end
+time(ctr,1)=toc;
 % end
 % w=(w-min(w(:)))/(max(w(:))-min(w(:))); %Normalization of weight vector
 % save Weights w
@@ -62,8 +70,9 @@ for i=1:size(te,1)%100
     end
     
 end
-Percentage=correct/length(label_te)
-
+Percentage(ctr,1)=correct/length(label_te)*100;
+ctr=ctr+1;
+end
 
 
 
